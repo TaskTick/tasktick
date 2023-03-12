@@ -50,6 +50,7 @@ const SignIn = ({navigation}) => {
         const resp = axios.post(`${HOST}/login/signin`, { username, password }).then(async res => {
             setState(res.data)
             await AsyncStorage.setItem("auth-rn", JSON.stringify(res.data)).catch(err => err)
+            console.log(res.data)
             navigation.navigate('Home')
         }).catch(err => console.log(err));
         //navigation.navigate('Home')
@@ -110,6 +111,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        
     },
     imageContainer: {
         top: 0,
@@ -123,6 +125,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         marginBottom: '5%'
+        
     },
     circleOpen: {
         width: '100%',
@@ -143,7 +146,7 @@ const styles = StyleSheet.create({
 
     },
     insideCircle: {
-        margin: '10%',
+        margin: '8%',
         alignItems: 'center',
         justifyContent: 'space-between'
     },
@@ -151,7 +154,7 @@ const styles = StyleSheet.create({
         fontSize: 30,
         color: 'black',
         fontWeight: 'bold',
-        marginBottom: '5%'
+        marginBottom: '2%'
     },
     headerLoginText: {
         fontSize: 25,
@@ -181,7 +184,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#5669FF",
         height: 50,
         marginTop: '5%',
-        marginBottom: '10%',
+        marginBottom: '5%',
         justifyContent: "center",
         borderRadius: 10,
     },
@@ -189,10 +192,12 @@ const styles = StyleSheet.create({
         fontSize: 20,
         textAlign: 'center',
         color: '#fff',
+        
     },
     buttonForgotPassword: {
         textAlign: 'center',
-        color: '#C82A33'
+        color: '#C82A33',
+        //marginBottom:'5%'
     },
     icon: {
         textAlign: "right",
