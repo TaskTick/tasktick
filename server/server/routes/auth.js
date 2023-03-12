@@ -4,9 +4,7 @@ import {signup,signin} from "../controllers/auth.js"
 const router = express.Router()
 
 router.get("/",(req,res)=>{
-    return res.json({
-        data:"hello world from the API"
-    });
+    res.send("hello world from auth.js")
 });
 
 

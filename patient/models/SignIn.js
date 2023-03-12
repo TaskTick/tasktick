@@ -2,15 +2,21 @@ import React, { useState, useEffect } from "react"
 import { Animated, Keyboard, StyleSheet, Text, View, Image, TextInput, TouchableOpacity, TouchableHighlight, Dimensions, Easing } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
+import axios from "axios";
+import { HOST } from "./network";
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { AuthContext } from '../context/auth'
+
 const windowWidth = Dimensions.get('window').width;
 const windowsHeight = Dimensions.get('window').height;
 
-const SignIn = () => {
+const SignIn = ({navigation}) => {
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
     const [showPassword, setShowPassword] = useState(false)
     const [isKeyboardOpen, setKeyboardOpen] = useState(false);
     const [animation] = useState(new Animated.Value(0));
+    const [state, setState] = useState(AuthContext)
 
     useEffect(() => {
         const showListener = Keyboard.addListener('keyboardDidShow', () => {
@@ -40,6 +46,13 @@ const SignIn = () => {
 
     const handleLogin = async () => {
         console.log('login pressed')
+        //For server use
+        const resp = axios.post(`${HOST}/login/signin`, { username, password }).then(async res => {
+            setState(res.data)
+            await AsyncStorage.setItem("auth-rn", JSON.stringify(res.data)).catch(err => err)
+            navigation.navigate('Home')
+        }).catch(err => console.log(err));
+        //navigation.navigate('Home')
     }
 
     return (

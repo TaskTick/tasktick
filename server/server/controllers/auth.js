@@ -6,6 +6,7 @@ import User from "../../models/user.js";
 
 // sendgrid
 dotenv.config();
+const JWT_SECRET = "2420EB49E87E274F1E407BF2DE1EE36B09A142C2E6F895054B2284827EAC01D0"
 //const sgMail = require("@sendgrid/mail");
 //sgMail.setApiKey(process.env.SENDGRID_KEY);
 export const signup = async (req, res) => {
@@ -43,7 +44,7 @@ export const signup = async (req, res) => {
                 password: hashedPassword,
             }).save();
             // create signed token
-            const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
+            const token = jwt.sign({ _id: user._id }, JWT_SECRET, {
                 expiresIn: "7d",
             });
             //   console.log(user);
@@ -62,9 +63,9 @@ export const signup = async (req, res) => {
 export const signin = async (req, res) => {
     // console.log(req.body);
     try {
-        const { email, password } = req.body;
+        const { username, password } = req.body;
         // check if our db has user with that email
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ username });
         if (!user) {
             return res.json({
                 error: "No user found",
@@ -78,7 +79,7 @@ export const signin = async (req, res) => {
             });
         }
         // create signed token
-        const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
+        const token = jwt.sign({ _id: user._id }, JWT_SECRET, {
             expiresIn: "7d",
         });
         user.password = undefined;
