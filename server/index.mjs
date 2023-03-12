@@ -26,6 +26,7 @@ app.use(m("dev"))
 
 app.use("/login", router)
 app.use("/patient",routerPatient)
+app.use("/api", router)
 
 /**
  * Used to check if connection is receieved from server upon starting the application

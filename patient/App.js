@@ -6,7 +6,7 @@ import axios from 'axios';
 import { HOST } from "./models/network"
 import SignIn from './models/SignIn';
 import Home from './models/Home';
-
+import SignUp from './models/SignUp';
 const Stack = createNativeStackNavigator();
 const checkConnection = async () => {
 
@@ -26,7 +26,6 @@ export default function App() {
       <Stack.Navigator initialRouteName='SignIn'>
         <Stack.Group screenOptions={{ headerShown: false }}>
           <Stack.Screen name="SignIn" component={SignIn} />
-          <Stack.Screen name="Home" component={Home}/>
         </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>

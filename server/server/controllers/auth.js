@@ -13,15 +13,15 @@ export const signup = async (req, res) => {
     console.log("Signup Hit");
     try {
         // validation
-        const { name, email, password } = req.body;
+        const { name, username, password } = req.body;
         if (!name) {
             return res.json({
                 error: "Name is required",
             });
         }
-        if (!email) {
+        if (!username) {
             return res.json({
-                error: "Email is required",
+                error: "username is required",
             });
         }
         if (!password || password.length < 6) {
@@ -29,10 +29,10 @@ export const signup = async (req, res) => {
                 error: "Password is required and should be 6 characters long",
             });
         }
-        const exist = await User.findOne({ email });
+        const exist = await User.findOne({ username });
         if (exist) {
             return res.json({
-                error: "Email is taken",
+                error: "username is taken",
             });
         }
         // hash password
@@ -40,7 +40,7 @@ export const signup = async (req, res) => {
         try {
             const user = await new User({
                 name,
-                email,
+                username,
                 password: hashedPassword,
             }).save();
             // create signed token
