@@ -22,10 +22,12 @@ export default function App() {
   checkConnection();
 
   return (
+    //<SignUp/>
     <NavigationContainer>
       <Stack.Navigator initialRouteName='SignIn'>
         <Stack.Group screenOptions={{ headerShown: false }}>
           <Stack.Screen name="SignIn" component={SignIn} />
+          <Stack.Screen name="Home" component={Home}/>
         </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>

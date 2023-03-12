@@ -23,7 +23,7 @@ const SignIn = ({navigation}) => {
             setKeyboardOpen(true);
             Animated.timing(animation, {
                 toValue: 1,
-                duration: 1000,
+                duration: 750,
                 easing: Easing.linear,
                 useNativeDriver: true,
             }).start();
@@ -32,7 +32,7 @@ const SignIn = ({navigation}) => {
             setKeyboardOpen(false);
             Animated.timing(animation, {
                 toValue: 0,
-                duration: 1000,
+                duration: 750,
                 easing: Easing.linear,
                 useNativeDriver: true,
             }).start();
@@ -113,9 +113,9 @@ const styles = StyleSheet.create({
     },
     imageContainer: {
         top: 0,
-        marginTop: '5%',
-        width: windowWidth * 0.73,
-        height: windowsHeight * 0.3,
+        marginTop: '15%',
+        width: windowWidth * 0.79,
+        height: windowsHeight * 0.31,
         position: "absolute",
 
     },
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     },
     circleOpen: {
         width: '100%',
-        height: '70%',
+        height: '62%',
         borderTopLeftRadius: 50,
         borderTopRightRadius: 50,
         backgroundColor: '#FEFCFF',
@@ -168,10 +168,14 @@ const styles = StyleSheet.create({
     },
     input: {
         borderWidth: 1,
+        width:'100%',
+        height:45,
         borderColor: "gray",
         marginBottom: '5%',
         borderRadius: 10,
-        color: 'black'
+        color: 'black',
+        fontSize:20,
+        padding: 10,
     },
     buttonLogin: {
         backgroundColor: "#5669FF",
