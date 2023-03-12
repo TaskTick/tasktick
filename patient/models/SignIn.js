@@ -61,7 +61,7 @@ const SignIn = ({navigation}) => {
             colors={['#5669FF', '#0013A5']}
             style={styles.container}>
             <View style={styles.imageContainer}>
-                <Image style={styles.imageStyles} source={require("../assets/logo-login.png")} />
+                <Image style={styles.imageStyles} source={require("../assets/logo-login4.png")} />
             </View>
             <Animated.View
                 style={[{
@@ -119,12 +119,14 @@ const styles = StyleSheet.create({
         width: windowWidth * 0.79,
         height: windowsHeight * 0.31,
         position: "absolute",
+        alignItems: 'center',
+        justifyContent: 'center',
 
     },
     imageStyles: {
-        width: '100%',
-        height: '100%',
-        marginBottom: '5%'
+        // width: '100%',
+        // height: '100%',
+        // marginBottom: '5%'
         
     },
     circleOpen: {
