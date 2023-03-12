@@ -23,7 +23,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(cors())
 app.use(m("dev"))
 
-//app.use("/api", router)
+app.use("/api", router)
 
 /**
  * Used to check if connection is receieved from server upon starting the application

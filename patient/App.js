@@ -5,7 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import axios from 'axios';
 import { HOST } from "./models/network"
 import SignIn from './models/SignIn';
-
+import SignUp from './models/SignUp';
 const Stack = createNativeStackNavigator();
 const checkConnection = async () => {
 
@@ -21,13 +21,14 @@ export default function App() {
   checkConnection();
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName='SignIn'>
-        <Stack.Group screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="SignIn" component={SignIn} />
-        </Stack.Group>
-      </Stack.Navigator>
-    </NavigationContainer>
+    <SignUp />
+    // <NavigationContainer>
+    //   <Stack.Navigator initialRouteName='SignIn'>
+    //     <Stack.Group screenOptions={{ headerShown: false }}>
+    //       <Stack.Screen name="SignIn" component={SignIn} />
+    //     </Stack.Group>
+    //   </Stack.Navigator>
+    // </NavigationContainer>
   );
 }
 
