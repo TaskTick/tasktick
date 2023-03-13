@@ -6,17 +6,37 @@ import axios from "axios";
 import { HOST } from "./network";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { AuthContext } from '../context/auth'
-
+import translation from '../translations/SignInTranslation.js'
+import { I18n } from "i18n-js";
+import Flag from 'react-native-round-flags'
+import AppLoader from "../components/AppLoader";
 const windowWidth = Dimensions.get('window').width;
 const windowsHeight = Dimensions.get('window').height;
+const i18n = new I18n(translation)
+i18n.locale = "he";
 
-const SignIn = ({navigation}) => {
-    const [username, setUsername] = useState();
-    const [password, setPassword] = useState();
+const SignIn = ({ navigation }) => {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false)
     const [isKeyboardOpen, setKeyboardOpen] = useState(false);
     const [animation] = useState(new Animated.Value(0));
     const [state, setState] = useState(AuthContext)
+    const [locale, setLocale] = useState(i18n.locale)
+    const [loading, isLoading] = useState(null)
+    const [showRequiredFields, SetShowRequiredFields] = useState(false)
+   
+    const changeLanguage = () => {
+        if (locale === "he")
+            setLocale("en")
+        else
+            setLocale("he")
+        i18n.locale = locale;
+    }
+
+    useEffect(() => {
+        changeLanguage()
+    }, [])
 
     useEffect(() => {
         const showListener = Keyboard.addListener('keyboardDidShow', () => {
@@ -44,16 +64,31 @@ const SignIn = ({navigation}) => {
         };
     }, [animation]);
 
+    if (loading === true) {
+        return(<AppLoader />)
+    }
+
     const handleLogin = async () => {
-        console.log('login pressed')
+        isLoading(true)
+        if (username === '' || password === '') {
+            SetShowRequiredFields(true)
+            isLoading(false)
+            return;
+        }
         //For server use
-        const resp = axios.post(`${HOST}/login/signin`, { username, password }).then(async res => {
+        const resp = await axios.post(`${HOST}/login/signin`, { username, password }).then(async res => {
             setState(res.data)
+            if (res.data.error === "No user found") {
+                alert(i18n.t("wrongPass"))
+                isLoading(false)
+                return;
+            }
             await AsyncStorage.setItem("auth-rn", JSON.stringify(res.data)).catch(err => err)
-            console.log(res.data)
+            //console.log(res.data)
+            isLoading(false)
+            SetShowRequiredFields(false)
             navigation.navigate('Footerroot')
         }).catch(err => console.log(err));
-        //navigation.navigate('Home')
     }
 
     return (
@@ -76,15 +111,17 @@ const SignIn = ({navigation}) => {
                 }, isKeyboardOpen ? styles.circleClosed : styles.circleOpen]}>
                 <View>
                     <View style={styles.insideCircle}>
-                        <Text style={styles.headerText}>Welcome</Text>
-                        <Text style={styles.headerLoginText}>Login to your account</Text>
+                        <Text style={styles.headerText}>{i18n.t("welcome")}</Text>
+                        <Text style={styles.headerLoginText}>{i18n.t("login")}</Text>
                     </View>
 
                     <View style={styles.inputHeaders}>
-                        <Text style={styles.inputTitle}>Username</Text>
+                        <Text style={styles.inputTitle}>
+                            {i18n.t("username")}{showRequiredFields ? <Text style={{ color: "darkred", fontWeight: "bold", fontSize: 12 }}> *</Text> : undefined}</Text>
                         <TextInput style={styles.input} placeholder="example: UX2DS53" placeholderTextColor={'grey'} onChangeText={text => setUsername(text)}></TextInput>
 
-                        <Text style={styles.inputTitle}>Password</Text>
+                        <Text style={styles.inputTitle}>{i18n.t("password")}
+                        {showRequiredFields ? <Text style={{ color: "darkred", fontWeight: "bold", fontSize: 12 }}> *</Text> : ''}</Text>
                         <View>
                             <TextInput style={styles.input} placeholder='Enter your Password' placeholderTextColor={'grey'} secureTextEntry={!showPassword} textContentType='password' onChangeText={text => setPassword(text)} />
                             <TouchableHighlight style={styles.icon} onPress={() => setShowPassword(!showPassword)}>
@@ -93,12 +130,20 @@ const SignIn = ({navigation}) => {
                         </View>
 
                         <TouchableOpacity style={styles.buttonLogin} onPress={handleLogin}>
-                            <Text style={styles.buttonText}>Login</Text>
+                            <Text style={styles.buttonText}>{i18n.t("loginSubmit")}</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity>
-                            <Text style={styles.buttonForgotPassword}>Forgot Password?</Text>
+                            <Text style={styles.buttonForgotPassword}>{i18n.t("forgotPass")}</Text>
                         </TouchableOpacity>
+                        {showRequiredFields ? <Text style={{ color: "darkred", fontWeight: "bold", fontSize: 12, textAlign: 'center', marginTop: 10 }}>{i18n.t("empty")}*</Text> : ''}
+
+                        <TouchableOpacity onPress={changeLanguage}>
+
+                            {i18n.locale === "en" ? <Flag style={styles.langBtn} code="GB" /> :
+                                <Flag style={[styles.langBtn, { alignSelf: 'flex-end' }]} code="IL" />}
+                        </TouchableOpacity>
+
                     </View>
                 </View>
             </Animated.View>
@@ -111,7 +156,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        
+
     },
     imageContainer: {
         top: 0,
@@ -127,7 +172,7 @@ const styles = StyleSheet.create({
         // width: '100%',
         // height: '100%',
         // marginBottom: '5%'
-        
+
     },
     circleOpen: {
         width: '100%',
@@ -173,13 +218,13 @@ const styles = StyleSheet.create({
     },
     input: {
         borderWidth: 1,
-        width:'100%',
-        height:45,
+        width: '100%',
+        height: 45,
         borderColor: "gray",
         marginBottom: '5%',
         borderRadius: 10,
         color: 'black',
-        fontSize:20,
+        fontSize: 20,
         padding: 10,
     },
     buttonLogin: {
@@ -194,7 +239,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         textAlign: 'center',
         color: '#fff',
-        
+
     },
     buttonForgotPassword: {
         textAlign: 'center',
@@ -207,6 +252,12 @@ const styles = StyleSheet.create({
         right: '5%',
         bottom: '50%',
         zIndex: 99999999,
-    }
+    langBtn: {
+        width: 50,
+        height: 50,
+        padding: 10,
+        borderRadius: 100,
+        backgroundColor: '#5669FF',
+    },
 });
 export default SignIn
