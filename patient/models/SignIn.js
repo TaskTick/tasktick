@@ -252,6 +252,7 @@ const styles = StyleSheet.create({
         right: '5%',
         bottom: '50%',
         zIndex: 99999999,
+    },
     langBtn: {
         width: 50,
         height: 50,
