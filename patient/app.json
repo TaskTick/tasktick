@@ -1,6 +1,5 @@
 {
   "expo": {
-  
     "name": "patient",
     "slug": "patient",
     "version": "1.0.0",
@@ -26,6 +25,9 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "expo-localization"
+    ]
   }
 }
