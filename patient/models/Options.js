@@ -1,11 +1,15 @@
 import React from "react"
 import {  Text, SafeAreaView, StyleSheet} from 'react-native'
-const Home = () => {
+import FooterList from '../components/FooterList'
+
+const Options = () => {
     return (
      
         <SafeAreaView style={styles.container}>
-            <Text style={styles.mainText}>Home</Text>
+            <Text style={styles.mainText}>Options</Text>
        
+
+         
         </SafeAreaView>
    
     )
@@ -20,4 +24,4 @@ const styles=StyleSheet.create({
     }
 
 })
-export default Home
+export default Options

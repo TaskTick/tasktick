@@ -1,11 +1,14 @@
 import React from "react"
 import {  Text, SafeAreaView, StyleSheet} from 'react-native'
-const Home = () => {
+
+
+const Menu = () => {
     return (
      
         <SafeAreaView style={styles.container}>
-            <Text style={styles.mainText}>Home</Text>
+            <Text style={styles.mainText}>Menu</Text>
        
+
         </SafeAreaView>
    
     )
@@ -20,4 +23,4 @@ const styles=StyleSheet.create({
     }
 
 })
-export default Home
+export default Menu

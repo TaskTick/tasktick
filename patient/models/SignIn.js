@@ -51,7 +51,7 @@ const SignIn = ({navigation}) => {
             setState(res.data)
             await AsyncStorage.setItem("auth-rn", JSON.stringify(res.data)).catch(err => err)
             console.log(res.data)
-            navigation.navigate('Home')
+            navigation.navigate('Footerroot')
         }).catch(err => console.log(err));
         //navigation.navigate('Home')
     }
