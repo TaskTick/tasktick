@@ -25,7 +25,7 @@ const SignIn = ({ navigation }) => {
     const [locale, setLocale] = useState(i18n.locale)
     const [loading, isLoading] = useState(null)
     const [showRequiredFields, SetShowRequiredFields] = useState(false)
-   
+
     const changeLanguage = () => {
         if (locale === "he")
             setLocale("en")
@@ -65,7 +65,7 @@ const SignIn = ({ navigation }) => {
     }, [animation]);
 
     if (loading === true) {
-        return(<AppLoader />)
+        return (<AppLoader />)
     }
 
     const handleLogin = async () => {
@@ -121,7 +121,7 @@ const SignIn = ({ navigation }) => {
                         <TextInput style={styles.input} placeholder="example: UX2DS53" placeholderTextColor={'grey'} onChangeText={text => setUsername(text)}></TextInput>
 
                         <Text style={styles.inputTitle}>{i18n.t("password")}
-                        {showRequiredFields ? <Text style={{ color: "darkred", fontWeight: "bold", fontSize: 12 }}> *</Text> : ''}</Text>
+                            {showRequiredFields ? <Text style={{ color: "darkred", fontWeight: "bold", fontSize: 12 }}> *</Text> : ''}</Text>
                         <View>
                             <TextInput style={styles.input} placeholder='Enter your Password' placeholderTextColor={'grey'} secureTextEntry={!showPassword} textContentType='password' onChangeText={text => setPassword(text)} />
                             <TouchableHighlight style={styles.icon} onPress={() => setShowPassword(!showPassword)}>
@@ -138,13 +138,19 @@ const SignIn = ({ navigation }) => {
                         </TouchableOpacity>
                         {showRequiredFields ? <Text style={{ color: "darkred", fontWeight: "bold", fontSize: 12, textAlign: 'center', marginTop: 10 }}>{i18n.t("empty")}*</Text> : ''}
 
-                        <TouchableOpacity onPress={changeLanguage}>
-
-                            {i18n.locale === "en" ? <Flag style={styles.langBtn} code="GB" /> :
-                                <Flag style={[styles.langBtn, { alignSelf: 'flex-end' }]} code="IL" />}
-                        </TouchableOpacity>
-
                     </View>
+                    {i18n.locale === "en" ?
+                        <View style={{ position: 'absolute', marginLeft: "3%", marginTop: "100%" }}>
+                            <TouchableOpacity onPress={changeLanguage}>
+                                <Flag style={styles.langBtn} code="GB" />
+                            </TouchableOpacity>
+                        </View>
+                        :
+                        <View  style={{ position: 'absolute', marginLeft: "75%", marginTop: "100%" }}> 
+                            <TouchableOpacity onPress={changeLanguage}>
+                                <Flag style={[styles.langBtn, { alignSelf: 'flex-end' }]} code="IL" />
+                            </TouchableOpacity></View>}
+
                 </View>
             </Animated.View>
         </LinearGradient>
