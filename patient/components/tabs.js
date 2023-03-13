@@ -7,23 +7,22 @@ import Options from "../models/Options";
 import Menu from "../models/Menu";
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
-
+import { useRoute } from '@react-navigation/native';
 import { Foundation } from '@expo/vector-icons';
 const Tab = createBottomTabNavigator();
+
 const CustomTabBarbutton = ({ children, onPress }) => (
+
     <TouchableOpacity
-        style={{
-            top: -20,
-            justifyContent: "center",
-            alignItems: "center",
-            ...styles.shadow
-        }}
-        onPress={onPress}
+        onPress={onPress} 
     >
         <View style={{
-            width: 70,
-            height: 70,
-            borderRadius: 35
+            top:-30,
+            width: 60,
+            height: 60,
+            borderRadius: 100,
+            backgroundColor: '#5669FF'
+            
         }}>
             {children}
         </View>
@@ -32,72 +31,78 @@ const CustomTabBarbutton = ({ children, onPress }) => (
 
 const Tabs = () => {
     return (
+
         <Tab.Navigator
             screenOptions={({ route }) => ({
-                tabBarActiveTintColor: '#efb810',
+                tabBarShowLabel: false,
+                tabBarActiveTintColor: '#5669FF',
                 tabBarInactiveTintColor: 'black',
-                showLabel: false,
-                style: {
-                    position: 'absolute',
-                    bottom: 20,
-                    left: 20,
-                    right: 20,
-                    elevation: 0,
-                    backgroundColor: '#ffffff',
-                    borderRadius: 15,
-                    height: 90,
-                    ...styles.shadow
-                }
+                tabBarStyle: [
+                    {
+                        display: "flex"
+                    },
+                    null
+                ],
+                tabBarIcon: ({ focused, color, size }) => {
+                    if (route.name === 'Home') {
+                        return (
+                            <View>
+                            <FontAwesome5 name="home" size={24} color={color} style={{alignSelf:'center'}}/>
+                            <Text style={[styles.txt,color={color}]}>Home</Text>
+
+                            </View>
+                        );
+                    } else if (route.name === 'Calendar') {
+                        return (
+                            <View>
+                            <FontAwesome5 name="calendar-alt" size={24} color={color} style={{alignSelf:'center'}}/>
+                            <Text style={[styles.txt,color={color}]}>Calendar</Text>
+
+                            </View>
+                        );
+                    }
+                    else if (route.name === 'CareGiver') {
+                        return (
+                           
+                            <View>
+                                 <Foundation name="torsos-all-female" size={24} color={color} style={{alignSelf:'center'}}/>
+                                 <Text style={[styles.txt,color={color}]}>Caregiver</Text>
+
+                            </View>
+                          
+                        );
+                    } else if (route.name === 'Options') {
+                        return (
+                            <View >
+                            <FontAwesome5 name="indent"  size={24} color={color} style={{alignSelf:'center'}}/>
+                            <Text style={[styles.txt,color={color}]}>Options</Text>
+
+                            </View>
+                        );
+                    }
+                },
             })}
+
         >
 
-            <Tab.Screen name="Home" component={Home} options={{
+
+            <Tab.Screen name="Home" component={Home} />
+            <Tab.Screen name="CareGiver" component={CareGiver} />
+            <Tab.Screen name="Menu" component={Menu} options={{
+
                 tabBarIcon: ({ focused }) => (
-                    <View>
-                        <FontAwesome5 name="home" size={24} color="black" />
-                    </View>
+                    
+                        <Ionicons name="add-circle-outline" size={50} color="black" style={{marginLeft:2}}/>
+            
+                ), tabBarButton: (props) => (
+                    <CustomTabBarbutton {...props} />
                 )
-            }} />
-            <Tab.Screen name="Calendar" component={Calendar} options={{
-                tabBarIcon: ({ focused }) => (
-                    <View>
-                        <FontAwesome5 name="calendar-alt" size={24} color="black" />
-                    </View>
-                )
-            }} />
+            }}
 
-
-
-            <Tab.Screen name="Menu" component={Menu}
-                options={{
-                    tabBarIcon: ({ focused }) => (
-                        <View>
-                        <Ionicons name="add-circle-outline" size={60} color="black" />
-                        </View>
-                    ),tabBarButton:(props)=>(
-                        <CustomTabBarbutton {...props}/>
-                    )
-                }}
             />
 
-
-
-
-
-            <Tab.Screen name="CareGiver" component={CareGiver} options={{
-                tabBarIcon: ({ focused }) => (
-                    <View>
-                        <Foundation name="torsos-all-female" size={24} color="black" />
-                    </View>
-                )
-            }} />
-            <Tab.Screen name="Options" component={Options} options={{
-                tabBarIcon: ({ focused }) => (
-                    <View>
-                        <FontAwesome5 name="indent" size={24} color="black" />
-                    </View>
-                )
-            }} />
+            <Tab.Screen name="Calendar" component={Calendar} />
+            <Tab.Screen name="Options" component={Options} />
         </Tab.Navigator>
     )
 }
@@ -112,6 +117,11 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.5,
         elevation: 5
+    },
+    txt:
+    {
+       
+
     }
 
 });
