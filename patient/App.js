@@ -5,7 +5,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import axios from 'axios';
 import { HOST } from "./models/network"
 import SignIn from './models/SignIn';
-import Home from './models/Home';
 import Footerroot from './Footerroot'
 import SignUp from './models/SignUp';
 import { AuthProvider } from './context/auth';
@@ -32,8 +31,6 @@ export default function App() {
           <Stack.Group screenOptions={{ headerShown: false }}>
             <Stack.Screen name="SignIn" component={SignIn} />
             <Stack.Screen name="Footerroot" component={Footerroot} />
-            {/* <Stack.Screen name="Home" component={Home} /> */}
-            
           </Stack.Group>
         </Stack.Navigator>
       </AuthProvider>

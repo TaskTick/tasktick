@@ -9,6 +9,8 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { useRoute } from '@react-navigation/native';
 import { Foundation } from '@expo/vector-icons';
+import AddTask from '../models/AddTask';
+
 const Tab = createBottomTabNavigator();
 
 const CustomTabBarbutton = ({ children, onPress }) => (
@@ -88,16 +90,10 @@ const Tabs = () => {
 
             <Tab.Screen name="Home" component={Home} />
             <Tab.Screen name="CareGiver" component={CareGiver} />
-            {/* <Tab.Screen name="Menu" component={Menu} options={{
-                tabBarIcon: ({ focused }) => (
-                    <Ionicons name="add-circle-outline" size={50} color="black" style={{ marginLeft: 2 }} />
-                ), tabBarButton: (props) => (
-                    <CustomTabBarbutton {...props} />
-                )
-            }}
-            /> */}
             <Tab.Screen name="Calendar" component={Calendar} />
             <Tab.Screen name="Options" component={Options} />
+            <Tab.Screen name="AddTask" component={AddTask} options={{ tabBarButton: () => null }} />
+
         </Tab.Navigator>
     )
 }

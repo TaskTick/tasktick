@@ -1,13 +1,13 @@
 import React from "react"
-import { Text, SafeAreaView, StyleSheet, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import ActionButton from 'react-native-action-button';
 import { Foundation } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-const Home = () => {
+const Home = ({navigation}) => {
     return (
         <View style={{ flex: 1, backgroundColor: '#f3f3f3' }}>
             <ActionButton buttonColor="rgba(231,76,60,1)">
-                <ActionButton.Item buttonColor='#9b59b6' title="New Task" onPress={() => console.log("notes tapped!")}>
+                <ActionButton.Item buttonColor='#9b59b6' title="New Task" onPress={() => navigation.navigate('AddTask')}>
                     <Foundation name="clipboard-pencil" size={25} style={styles.actionButtonIcon} />
                 </ActionButton.Item>
                 <ActionButton.Item buttonColor='#3498db' title="Add Feedback" onPress={() => { }}>
